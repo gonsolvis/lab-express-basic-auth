@@ -6,10 +6,13 @@ const saltRounds = 10;
 
 const User = require("../models/User.model");
 
-// const isLoggedOut = require("../middleware/isLoggedOut");
-// const isLoggedIn = require("../middleware/isLoggedIn");
+const isLoggedOut = require("../middleware/isLoggedOut");
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/", (req, res, next) => {
+  res.render("index", { title: "Home page" })
+})
+router.post("/", (req, res, next) => {
   res.render("index", { title: "Home page" })
 })
 
@@ -56,12 +59,12 @@ router.post("/register", (req, res, next) => {
 
 })
 
-router.get("/login", (req, res, next) => {
+router.get("/login", isLoggedOut, (req, res, next) => {
   console.log("REQ.SESSION: ", req.session);
   res.render("users/login");
 })
 
-router.post("/login",  (req, res, next) => {
+router.post("/login",  isLoggedOut, (req, res, next) => {
   let { username, password } = req.body;
   if (username == "" || password == "") {
     res.render("users/login", { messageError: "Missing fields" });
@@ -87,11 +90,20 @@ router.post("/login",  (req, res, next) => {
 
 })
 
-router.get("/profile",  (req, res, next) => {
+router.get("/profile", isLoggedIn, (req, res, next) => {
   res.render("users/profile", { username: req.session.currentUser });
 })
 
-router.get("/logout",  (req, res, next) => {
+
+router.get("/main", isLoggedOut,  (req, res, next) => {
+  res.render("users/main");
+})
+
+router.get("/private", isLoggedIn,  (req, res, next) => {
+  res.render("users/private");
+})
+
+router.get("/logout", isLoggedIn, (req, res, next) => {
   req.session.destroy(err => {
     if (err) next(err);
     else res.redirect("/user/login");
