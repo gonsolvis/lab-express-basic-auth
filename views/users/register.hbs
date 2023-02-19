@@ -1,0 +1,21 @@
+<form action="/user/register" method="POST">
+    {{#if messageError}}
+        <div role="alert">
+            {{messageError}}
+        </div>
+    {{/if}}
+    <div>
+        <input type="text"  placeholder="JohnSmith93" name="username">
+        <label>Username</label>
+    </div>
+    <div>
+        <input type="password" placeholder="MagicMonday1984" name="password">
+        <label>Password</label>
+    </div>
+     <div>
+        <input type="password" placeholder="Repeat Password" name="passwordRepeat">
+        <label>Password</label>
+    </div>
+    <button type="submit"> Register </button>
+    <a href="/user/login"> I am already registered </a>
+</form> 

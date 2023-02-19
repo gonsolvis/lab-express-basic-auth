@@ -9,8 +9,14 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
 
-  <body>
-
+   <body>
+      <header>
+         {{#if username}}
+            Hola {{username}}!!!
+         {{else}}
+            Hello Anon' user!!
+         {{/if}}
+            </header>
     {{{body}}}
 
     <script src="/js/script.js"></script>
